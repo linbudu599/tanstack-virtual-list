@@ -50,7 +50,7 @@ export function createDirectionBasedFixedListItemStyle(
   };
 }
 
-export function ggetVerticalDynamicListStyle(
+export function createVerticalDynamicListStyle(
   initialItemStart: number
 ): React.CSSProperties {
   return {
@@ -59,7 +59,7 @@ export function ggetVerticalDynamicListStyle(
   };
 }
 
-export function getDynamicListItemStyle(
+export function createDynamicListItemStyle(
   item: VirtualItem,
   horizontal: boolean
 ): React.CSSProperties {

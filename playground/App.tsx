@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 
-import VirtualList from '../src';
+import FixedVirtualList from './FixedList';
 
 function App() {
   return (
     <>
-      <VirtualList />
+      <FixedVirtualList />
     </>
   );
 }

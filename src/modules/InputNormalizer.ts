@@ -1,6 +1,7 @@
 import {
   NormalizedVirtualListPadding,
   NormalizedVirtualListProps,
+  VirtualListImplProps,
   VirtualListPadding,
   VirtualListProps,
 } from '../typings';
@@ -36,6 +37,8 @@ export function normalizeInputProps(
 
     useVirtualizerOptions = {},
 
+    prefixClassName = 'tanstack-virtual',
+
     ...restProps
   } = (input ?? {}) as VirtualListProps;
 
@@ -51,12 +54,13 @@ export function normalizeInputProps(
     scrollPadding: normalizeInputPadding(scrollPadding),
     initialOffset,
     useVirtualizerOptions,
+    prefixClassName,
     ...restProps,
   };
 }
 
 export function pickHTMLSpecifiedProps(
-  input: NormalizedVirtualListProps
+  input: VirtualListImplProps
 ): React.HTMLAttributes<HTMLDivElement> {
   const {
     dataSource,
@@ -70,6 +74,8 @@ export function pickHTMLSpecifiedProps(
     scrollPadding,
     initialOffset,
     useVirtualizerOptions,
+    virtualizer,
+    prefixClassName,
     ...restProps
   } = input;
 

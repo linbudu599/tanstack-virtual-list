@@ -70,10 +70,14 @@ export interface VirtualListCoreProps<TDataSource = any> {
   horizontal?: boolean;
   dynamic?: boolean;
   buffer?: number;
-  useVirtualizerOptions: Partial<InstantiatedVirtualizerOptions>;
+  useVirtualizerOptions?: Partial<InstantiatedVirtualizerOptions>;
 }
 
 export interface VirtualListEventProps {}
+
+export interface VirtualListStyleMutationProps {
+  prefixClassName?: string;
+}
 
 export interface VirtualListProps<TDataSource = any>
   extends VirtualListCoreProps<TDataSource>,
@@ -81,9 +85,9 @@ export interface VirtualListProps<TDataSource = any>
     VirtualListItemDescriptor<TDataSource>,
     VirtualListPaddingProps,
     VirtualListEventProps,
+    VirtualListStyleMutationProps,
     React.PropsWithChildren,
-    React.HTMLAttributes<HTMLDivElement>,
-    React.RefAttributes<VirtualListRef> {}
+    React.HTMLAttributes<HTMLDivElement> {}
 
 export interface NormalizedVirtualListProps<TDataSource = any>
   extends Required<VirtualListCoreProps<TDataSource>>,
@@ -91,9 +95,9 @@ export interface NormalizedVirtualListProps<TDataSource = any>
     Required<VirtualListItemDescriptor<TDataSource>>,
     NormalizedVirtualListPaddingProps,
     VirtualListEventProps,
+    Required<VirtualListStyleMutationProps>,
     React.PropsWithChildren,
-    React.HTMLAttributes<HTMLDivElement>,
-    React.RefAttributes<VirtualListRef> {}
+    React.HTMLAttributes<HTMLDivElement> {}
 
 export interface VirtualListImplProps extends NormalizedVirtualListProps {
   virtualizer: V;

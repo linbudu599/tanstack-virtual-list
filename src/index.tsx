@@ -1,14 +1,17 @@
 import React, { forwardRef, useImperativeHandle, useRef } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
-import {
-  InstantiatedVirtualizerOptions,
-  VirtualListProps,
-  VirtualListRef,
-} from './typings';
+
 import { normalizeInputProps } from './modules/InputNormalizer';
 
 import FixedListImpl from './components/FixedList';
 import DynamicListImpl from './components/DynamicList';
+
+import type {
+  InstantiatedVirtualizerOptions,
+  VirtualListComponentTyping,
+  VirtualListProps,
+  VirtualListRef,
+} from './typings';
 
 const VirtualList = forwardRef<VirtualListRef, VirtualListProps>(
   (props, ref) => {
@@ -19,17 +22,12 @@ const VirtualList = forwardRef<VirtualListRef, VirtualListProps>(
     const {
       dynamic,
       dataSource,
-      renderItem,
       getItemHeight,
-      getItemKey,
       buffer,
       padding,
       scrollPadding,
       horizontal,
-      initialOffset,
-      style,
       useVirtualizerOptions,
-      ...htmlProps
     } = normalizedProps;
 
     const [paddingStart, paddingEnd] = padding.map((item) =>
@@ -77,18 +75,16 @@ const VirtualList = forwardRef<VirtualListRef, VirtualListProps>(
       };
     });
 
-    const VirtualListImpl = dynamic ? FixedListImpl : DynamicListImpl;
+    const VirtualListImpl = dynamic ? DynamicListImpl : FixedListImpl;
 
     return (
-      <>
-        <VirtualListImpl
-          ref={listRef}
-          virtualizer={virtualizer}
-          {...normalizedProps}
-        />
-      </>
+      <VirtualListImpl
+        ref={listRef}
+        virtualizer={virtualizer}
+        {...normalizedProps}
+      />
     );
   }
 );
 
-export default VirtualList;
+export default VirtualList as VirtualListComponentTyping;

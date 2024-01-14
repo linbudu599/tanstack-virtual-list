@@ -1,60 +1,144 @@
 import React, { forwardRef } from 'react';
-import {
-  VirtualListImplProps,
-  VirtualListProps,
-  VirtualListRef,
-} from '../typings';
+
+import { VirtualListImplProps } from '../typings';
 import { pickHTMLSpecifiedProps } from '../modules/InputNormalizer';
 import {
   createAbsolutePositionStyle,
-  createDirectionBasedFixedListItemStyle,
   createDirectionBasedListContainerStyle,
+  createDynamicListItemStyle,
   createListContainerStyle,
+  createVerticalDynamicListStyle,
 } from '../modules/StylePresets';
+import { usePaddingPlaceholder } from '../hooks/usePaddingPlaceholder';
+import { createClassNameBuilder } from '../modules/ClassNameBuilder';
 
-const DynamicListImpl = forwardRef<HTMLDivElement, VirtualListImplProps>(
-  (props, ref) => {
-    const { dataSource, renderItem, getItemKey, virtualizer, horizontal } =
-      props;
-    const htmlProps = pickHTMLSpecifiedProps(props);
+const DynamicItemsRenderer: React.FC<VirtualListImplProps> = (props) => {
+  const {
+    horizontal,
+    dataSource,
+    renderItem,
+    getItemKey,
+    virtualizer,
+    prefixClassName,
+  } = props;
 
-    const virtualizerItems = virtualizer.getVirtualItems();
+  const classNameBuilder = createClassNameBuilder(prefixClassName);
 
-    return (
+  return (
+    <>
+      {virtualizer.getVirtualItems().map((virtualItem) => {
+        const { index } = virtualItem;
+
+        const itemRenderSource = dataSource[index];
+
+        return (
+          <div
+            key={getItemKey(itemRenderSource, index)}
+            data-virtual-item-index={index}
+            ref={virtualizer.measureElement}
+            style={{
+              ...createDynamicListItemStyle(virtualItem, horizontal),
+            }}
+            className={classNameBuilder('list-item')}
+          >
+            {renderItem(itemRenderSource, index, virtualItem)}
+          </div>
+        );
+      })}
+    </>
+  );
+};
+
+const VerticalDynamicVirtualList = forwardRef<
+  HTMLDivElement,
+  VirtualListImplProps
+>((props, ref) => {
+  const { virtualizer, padding, prefixClassName } = props;
+  const htmlProps = pickHTMLSpecifiedProps(props);
+
+  const virtualizerItems = virtualizer.getVirtualItems();
+  const classNameBuilder = createClassNameBuilder(prefixClassName);
+
+  const [PaddingStartPlaceholder, PaddingEndPlaceholder] =
+    usePaddingPlaceholder(padding, false);
+
+  return (
+    <div
+      {...htmlProps}
+      ref={ref}
+      className={classNameBuilder('list-container', htmlProps.className)}
+    >
+      {PaddingStartPlaceholder}
       <div
-        ref={ref}
         style={{
           ...createListContainerStyle(),
           ...createDirectionBasedListContainerStyle(
             virtualizer.getTotalSize(),
-            horizontal
+            false
           ),
         }}
-        {...htmlProps}
+        className={classNameBuilder('list')}
       >
-        {virtualizerItems.map((virtualItem) => {
-          const { index } = virtualItem;
-
-          const itemRenderSource = dataSource[index];
-
-          return (
-            <div
-              key={getItemKey(itemRenderSource, index)}
-              data-virtual-item-index={index}
-              style={{
-                ...createAbsolutePositionStyle(),
-                ...createDirectionBasedFixedListItemStyle(
-                  virtualItem,
-                  horizontal
-                ),
-              }}
-            >
-              {renderItem(itemRenderSource, index, virtualItem)}
-            </div>
-          );
-        })}
+        <div
+          style={{
+            ...createAbsolutePositionStyle(),
+            ...createVerticalDynamicListStyle(
+              virtualizerItems?.[0]?.start ?? 0
+            ),
+          }}
+        >
+          <DynamicItemsRenderer {...props} />
+        </div>
       </div>
-    );
+      {PaddingEndPlaceholder}
+    </div>
+  );
+});
+
+const HorizontalDynamicVirtualList = forwardRef<
+  HTMLDivElement,
+  VirtualListImplProps
+>((props, ref) => {
+  const { virtualizer, padding, prefixClassName } = props;
+  const htmlProps = pickHTMLSpecifiedProps(props);
+  const classNameBuilder = createClassNameBuilder(prefixClassName);
+
+  const [PaddingStartPlaceholder, PaddingEndPlaceholder] =
+    usePaddingPlaceholder(padding, false);
+
+  return (
+    <div
+      {...htmlProps}
+      ref={ref}
+      className={classNameBuilder('list-container', htmlProps.className)}
+    >
+      {PaddingStartPlaceholder}
+      <div
+        style={{
+          ...createListContainerStyle(),
+          ...createDirectionBasedListContainerStyle(
+            virtualizer.getTotalSize(),
+            true
+          ),
+        }}
+        className={classNameBuilder('list')}
+      >
+        <DynamicItemsRenderer {...props} />
+      </div>
+      {PaddingEndPlaceholder}
+    </div>
+  );
+});
+
+const DynamicListImpl = forwardRef<HTMLDivElement, VirtualListImplProps>(
+  (props, ref) => {
+    const { horizontal } = props;
+
+    const DynamicListImpl = horizontal
+      ? HorizontalDynamicVirtualList
+      : VerticalDynamicVirtualList;
+
+    return <DynamicListImpl {...props} ref={ref} />;
   }
 );
 

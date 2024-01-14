@@ -1,9 +1,6 @@
 import React, { forwardRef } from 'react';
-import {
-  VirtualListImplProps,
-  VirtualListProps,
-  VirtualListRef,
-} from '../typings';
+import clsx from 'clsx';
+
 import { pickHTMLSpecifiedProps } from '../modules/InputNormalizer';
 import {
   createAbsolutePositionStyle,
@@ -12,47 +9,63 @@ import {
   createListContainerStyle,
 } from '../modules/StylePresets';
 
+import type { VirtualListImplProps } from '../typings';
+import { createClassNameBuilder } from '../modules/ClassNameBuilder';
+
 const FixedListImpl = forwardRef<HTMLDivElement, VirtualListImplProps>(
   (props, ref) => {
-    const { dataSource, renderItem, getItemKey, virtualizer, horizontal } =
-      props;
-    const htmlProps = pickHTMLSpecifiedProps(props);
+    const {
+      dataSource,
+      renderItem,
+      getItemKey,
+      virtualizer,
+      horizontal,
+      prefixClassName,
+    } = props;
 
+    const htmlProps = pickHTMLSpecifiedProps(props);
     const virtualizerItems = virtualizer.getVirtualItems();
+    const classNameBuilder = createClassNameBuilder(prefixClassName);
 
     return (
       <div
-        ref={ref}
-        style={{
-          ...createListContainerStyle(),
-          ...createDirectionBasedListContainerStyle(
-            virtualizer.getTotalSize(),
-            horizontal
-          ),
-        }}
         {...htmlProps}
+        ref={ref}
+        className={classNameBuilder('list-container', htmlProps.className)}
       >
-        {virtualizerItems.map((virtualItem) => {
-          const { index } = virtualItem;
+        <div
+          style={{
+            ...createListContainerStyle(),
+            ...createDirectionBasedListContainerStyle(
+              virtualizer.getTotalSize(),
+              horizontal
+            ),
+          }}
+          className={classNameBuilder('list')}
+        >
+          {virtualizerItems.map((virtualItem) => {
+            const { index } = virtualItem;
 
-          const itemRenderSource = dataSource[index];
+            const itemRenderSource = dataSource[index];
 
-          return (
-            <div
-              key={getItemKey(itemRenderSource, index)}
-              data-virtual-item-index={index}
-              style={{
-                ...createAbsolutePositionStyle(),
-                ...createDirectionBasedFixedListItemStyle(
-                  virtualItem,
-                  horizontal
-                ),
-              }}
-            >
-              {renderItem(itemRenderSource, index, virtualItem)}
-            </div>
-          );
-        })}
+            return (
+              <div
+                key={getItemKey(itemRenderSource, index)}
+                data-virtual-item-index={index}
+                style={{
+                  ...createAbsolutePositionStyle(),
+                  ...createDirectionBasedFixedListItemStyle(
+                    virtualItem,
+                    horizontal
+                  ),
+                }}
+                className={classNameBuilder('list-item')}
+              >
+                {renderItem(itemRenderSource, index, virtualItem)}
+              </div>
+            );
+          })}
+        </div>
       </div>
     );
   }
