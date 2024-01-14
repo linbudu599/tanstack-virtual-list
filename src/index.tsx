@@ -6,12 +6,19 @@ import { normalizeInputProps } from './modules/InputNormalizer';
 import FixedListImpl from './components/FixedList';
 import DynamicListImpl from './components/DynamicList';
 
+import {
+  createsScrollByOffsetHandler,
+  createsScrollToOffsetHandler,
+} from './modules/ScrollControl';
+
 import type {
   InstantiatedVirtualizerOptions,
   VirtualListComponentTyping,
   VirtualListProps,
   VirtualListRef,
 } from './typings';
+
+export type { VirtualListRef } from './typings';
 
 const VirtualList = forwardRef<VirtualListRef, VirtualListProps>(
   (props, ref) => {
@@ -56,22 +63,15 @@ const VirtualList = forwardRef<VirtualListRef, VirtualListProps>(
       ...useVirtualizerOptions,
     });
 
-    function scrollByOffset() {}
-
-    function scrollToOffset() {}
-
     function scrollToIndex() {}
-
-    function resetScroll() {}
 
     useImperativeHandle(ref, () => {
       return {
         list: listRef.current,
         virtualizer,
-        scrollByOffset,
-        scrollToOffset,
+        scrollByOffset: createsScrollByOffsetHandler(listRef.current),
+        scrollToOffset: createsScrollToOffsetHandler(listRef.current),
         scrollToIndex,
-        resetScroll,
       };
     });
 

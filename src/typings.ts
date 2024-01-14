@@ -28,13 +28,14 @@ export type V = Virtualizer<HTMLDivElement, Element>;
 
 export interface ScrollControlOptions extends ScrollToOptions {}
 
+export type ScrollFromOffsetControl = (options?: ScrollControlOptions) => void;
+
 type VirtualListRefExpose = {
   list: HTMLDivElement | null;
   virtualizer: V;
-  scrollByOffset: (offset: number, options?: ScrollControlOptions) => void;
-  scrollToOffset: (offset: number, options?: ScrollControlOptions) => void;
+  scrollByOffset: ScrollFromOffsetControl;
+  scrollToOffset: ScrollFromOffsetControl;
   scrollToIndex: (index: number, options?: ScrollControlOptions) => void;
-  resetScroll: () => void;
 };
 
 export type VirtualListRef = VirtualListRefExpose | null | undefined;
