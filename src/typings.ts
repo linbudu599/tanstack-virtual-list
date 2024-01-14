@@ -33,9 +33,9 @@ export type ScrollFromOffsetControl = (options?: ScrollControlOptions) => void;
 type VirtualListRefExpose = {
   list: HTMLDivElement | null;
   virtualizer: V;
-  scrollByOffset: ScrollFromOffsetControl;
-  scrollToOffset: ScrollFromOffsetControl;
-  scrollToIndex: (index: number, options?: ScrollControlOptions) => void;
+  scrollByOffset: V['scrollBy'];
+  scrollToOffset: V['scrollToOffset'];
+  scrollToIndex: V['scrollToIndex'];
 };
 
 export type VirtualListRef = VirtualListRefExpose | null | undefined;

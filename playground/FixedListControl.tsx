@@ -12,6 +12,34 @@ export default function App() {
 
   return (
     <>
+      <button
+        onClick={() => {
+          ref.current?.scrollByOffset(50, {
+            behavior: 'smooth',
+          });
+        }}
+      >
+        Scroll by 50px
+      </button>
+      <button
+        onClick={() => {
+          ref.current?.scrollToOffset(500, {
+            behavior: 'smooth',
+          });
+        }}
+      >
+        Scroll to 500px
+      </button>
+      <button
+        onClick={() => {
+          ref.current?.scrollToIndex(50, {
+            align: 'center',
+            behavior: 'smooth',
+          });
+        }}
+      >
+        Scroll #50 into view
+      </button>
       <VirtualList
         ref={ref}
         className='List'

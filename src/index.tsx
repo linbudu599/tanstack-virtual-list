@@ -35,6 +35,7 @@ const VirtualList = forwardRef<VirtualListRef, VirtualListProps>(
       scrollPadding,
       horizontal,
       useVirtualizerOptions,
+      initialOffset,
     } = normalizedProps;
 
     const [paddingStart, paddingEnd] = padding.map((item) =>
@@ -59,19 +60,19 @@ const VirtualList = forwardRef<VirtualListRef, VirtualListProps>(
       paddingStart,
       paddingEnd,
       scrollPaddingStart,
-      scrollToFn,
+      // scrollToFn,
+      initialOffset,
       ...useVirtualizerOptions,
+      indexAttribute: 'data-virtual-item-index',
     });
-
-    function scrollToIndex() {}
 
     useImperativeHandle(ref, () => {
       return {
         list: listRef.current,
         virtualizer,
-        scrollByOffset: createsScrollByOffsetHandler(listRef.current),
-        scrollToOffset: createsScrollToOffsetHandler(listRef.current),
-        scrollToIndex,
+        scrollByOffset: virtualizer.scrollBy,
+        scrollToOffset: virtualizer.scrollToOffset,
+        scrollToIndex: virtualizer.scrollToIndex,
       };
     });
 
