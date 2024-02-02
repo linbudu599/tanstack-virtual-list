@@ -1,4 +1,4 @@
-import {
+import type {
   NormalizedVirtualListPadding,
   NormalizedVirtualListProps,
   VirtualListImplProps,
@@ -59,7 +59,7 @@ export function normalizeInputProps(
   };
 }
 
-export function pickHTMLSpecifiedProps(
+export function omitNonHTMLProps(
   input: VirtualListImplProps
 ): React.HTMLAttributes<HTMLDivElement> {
   const {

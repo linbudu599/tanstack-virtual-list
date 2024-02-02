@@ -47,7 +47,7 @@ interface VirtualListRendererProps<TDataSource = any> {
 
 interface VirtualListItemDescriptor<TDataSource = any> {
   getItemHeight: (item: TDataSource, index: number) => number;
-  getItemKey: (item: TDataSource, index: number) => React.Key;
+  getItemKey?: (item: TDataSource, index: number) => React.Key;
 }
 
 export type VirtualListPadding = number | [start?: number, end?: number];

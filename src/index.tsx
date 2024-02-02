@@ -1,5 +1,6 @@
 import React, { forwardRef, useImperativeHandle, useRef } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
+import { useSpring } from '@react-spring/web';
 
 import { normalizeInputProps } from './modules/InputNormalizer';
 
@@ -59,9 +60,9 @@ const VirtualList = forwardRef<VirtualListRef, VirtualListProps>(
       horizontal,
       paddingStart,
       paddingEnd,
-      scrollPaddingStart,
+      // scrollPaddingStart,
       // scrollToFn,
-      initialOffset,
+      // initialOffset,
       ...useVirtualizerOptions,
       indexAttribute: 'data-virtual-item-index',
     });

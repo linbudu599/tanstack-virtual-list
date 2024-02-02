@@ -61,7 +61,7 @@ export function createVerticalDynamicListStyle(
 
 export function createDynamicListItemStyle(
   item: VirtualItem,
-  horizontal: boolean
+  horizontal = false
 ): React.CSSProperties {
   return horizontal
     ? {

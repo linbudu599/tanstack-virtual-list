@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 
 import { VirtualListImplProps } from '../typings';
-import { pickHTMLSpecifiedProps } from '../modules/InputNormalizer';
+import { omitNonHTMLProps } from '../modules/InputNormalizer';
 import {
   createAbsolutePositionStyle,
   createDirectionBasedListContainerStyle,
@@ -36,9 +36,7 @@ const DynamicItemsRenderer: React.FC<VirtualListImplProps> = (props) => {
             key={getItemKey(itemRenderSource, index)}
             data-virtual-item-index={index}
             ref={virtualizer.measureElement}
-            style={{
-              ...createDynamicListItemStyle(virtualItem, horizontal),
-            }}
+            style={createDynamicListItemStyle(virtualItem, horizontal)}
             className={classNameBuilder('list-item')}
           >
             {renderItem(itemRenderSource, index, virtualItem)}
@@ -54,9 +52,10 @@ const VerticalDynamicVirtualList = forwardRef<
   VirtualListImplProps
 >((props, ref) => {
   const { virtualizer, padding, prefixClassName } = props;
-  const htmlProps = pickHTMLSpecifiedProps(props);
+  const htmlProps = omitNonHTMLProps(props);
 
   const virtualizerItems = virtualizer.getVirtualItems();
+
   const classNameBuilder = createClassNameBuilder(prefixClassName);
 
   const [PaddingStartPlaceholder, PaddingEndPlaceholder] =
@@ -100,7 +99,7 @@ const HorizontalDynamicVirtualList = forwardRef<
   VirtualListImplProps
 >((props, ref) => {
   const { virtualizer, padding, prefixClassName } = props;
-  const htmlProps = pickHTMLSpecifiedProps(props);
+  const htmlProps = omitNonHTMLProps(props);
   const classNameBuilder = createClassNameBuilder(prefixClassName);
 
   const [PaddingStartPlaceholder, PaddingEndPlaceholder] =

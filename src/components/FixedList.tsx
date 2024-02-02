@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import clsx from 'clsx';
 
-import { pickHTMLSpecifiedProps } from '../modules/InputNormalizer';
+import { omitNonHTMLProps } from '../modules/InputNormalizer';
 import {
   createAbsolutePositionStyle,
   createDirectionBasedFixedListItemStyle,
@@ -23,7 +23,7 @@ const FixedListImpl = forwardRef<HTMLDivElement, VirtualListImplProps>(
       prefixClassName,
     } = props;
 
-    const htmlProps = pickHTMLSpecifiedProps(props);
+    const htmlProps = omitNonHTMLProps(props);
     const virtualizerItems = virtualizer.getVirtualItems();
     const classNameBuilder = createClassNameBuilder(prefixClassName);
 
