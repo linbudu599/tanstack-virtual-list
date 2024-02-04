@@ -51,7 +51,6 @@
     "vitest": "^1.2.2"
   },
   "dependencies": {
-    "@react-spring/web": "^9.7.3",
     "@tanstack/react-virtual": "3.0.2",
     "clsx": "^2.1.0"
   }

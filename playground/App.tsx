@@ -34,7 +34,12 @@ function RenderExamples(props: {
 }) {
   return (
     <>
-      <Card shadow>
+      <Card
+        shadow
+        style={{
+          height: '100%',
+        }}
+      >
         <Text h4 my={0}>
           {props.title}
         </Text>
@@ -63,8 +68,9 @@ function App() {
       style={{
         display: 'flex',
         flexDirection: 'row',
-        alignItems: 'center',
+        alignItems: 'flex-start',
         justifyContent: 'center',
+        height: '600px',
       }}
     >
       {RenderExamples({ title: 'Fixed Virtual List', config: FixedExamples })}
