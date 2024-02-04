@@ -3,7 +3,7 @@ import React, { forwardRef } from 'react';
 import { VirtualListImplProps } from '../typings';
 import { omitNonHTMLProps } from '../modules/InputNormalizer';
 import {
-  createAbsolutePositionStyle,
+  createListContentStyle,
   createDirectionBasedListContainerStyle,
   createDynamicListItemStyle,
   createListContainerStyle,
@@ -80,7 +80,7 @@ const VerticalDynamicVirtualList = forwardRef<
       >
         <div
           style={{
-            ...createAbsolutePositionStyle(),
+            ...createListContentStyle(),
             ...createVerticalDynamicListStyle(
               virtualizerItems?.[0]?.start ?? 0
             ),

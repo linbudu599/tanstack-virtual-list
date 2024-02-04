@@ -3,7 +3,7 @@ import clsx from 'clsx';
 
 import { omitNonHTMLProps } from '../modules/InputNormalizer';
 import {
-  createAbsolutePositionStyle,
+  createListContentStyle,
   createDirectionBasedFixedListItemStyle,
   createDirectionBasedListContainerStyle,
   createListContainerStyle,
@@ -53,7 +53,7 @@ const FixedListImpl = forwardRef<HTMLDivElement, VirtualListImplProps>(
                 key={getItemKey(itemRenderSource, index)}
                 data-virtual-item-index={index}
                 style={{
-                  ...createAbsolutePositionStyle(),
+                  ...createListContentStyle(),
                   ...createDirectionBasedFixedListItemStyle(
                     virtualItem,
                     horizontal

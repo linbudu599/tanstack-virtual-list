@@ -18,7 +18,7 @@ export function createDirectionBasedListContainerStyle(
   };
 }
 
-export function createAbsolutePositionStyle(): React.CSSProperties {
+export function createListContentStyle(): React.CSSProperties {
   return {
     position: 'absolute',
     top: 0,
@@ -55,7 +55,7 @@ export function createVerticalDynamicListStyle(
 ): React.CSSProperties {
   return {
     width: '100%',
-    transform: `translateY(${initialItemStart})px`,
+    transform: `translateY(${initialItemStart}px)`,
   };
 }
 
