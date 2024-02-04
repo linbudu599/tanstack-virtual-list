@@ -17,9 +17,6 @@ export default function App() {
       <VirtualList
         dynamic
         className='List'
-        style={{
-          overflow: 'hidden scroll',
-        }}
         // DOESNOT WORKS ACTUALLY
         getItemHeight={() => 60}
         dataSource={DataSource}

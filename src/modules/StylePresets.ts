@@ -2,13 +2,25 @@ import React from 'react';
 
 import { VirtualItem } from '@tanstack/react-virtual';
 
-export function createListContainerStyle(): React.CSSProperties {
+export function createDirectionBasedListContainerStyle(
+  horizontal = false
+): React.CSSProperties {
+  return horizontal
+    ? {
+        overflowX: 'auto',
+      }
+    : {
+        overflowY: 'auto',
+      };
+}
+
+export function createRelativePositionStyle(): React.CSSProperties {
   return {
     position: 'relative',
   };
 }
 
-export function createDirectionBasedListContainerStyle(
+export function createVirtualSizeListContentStyle(
   virtualSize: number,
   horizontal = false
 ): React.CSSProperties {
@@ -18,7 +30,7 @@ export function createDirectionBasedListContainerStyle(
   };
 }
 
-export function createListContentStyle(): React.CSSProperties {
+export function createAbsolutePositionStyle(): React.CSSProperties {
   return {
     position: 'absolute',
     top: 0,

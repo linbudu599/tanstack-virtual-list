@@ -3,10 +3,11 @@ import clsx from 'clsx';
 
 import { omitNonHTMLProps } from '../modules/InputNormalizer';
 import {
-  createListContentStyle,
+  createAbsolutePositionStyle,
+  createVirtualSizeListContentStyle,
   createDirectionBasedFixedListItemStyle,
   createDirectionBasedListContainerStyle,
-  createListContainerStyle,
+  createRelativePositionStyle,
 } from '../modules/StylePresets';
 
 import type { VirtualListImplProps } from '../typings';
@@ -21,6 +22,8 @@ const FixedListImpl = forwardRef<HTMLDivElement, VirtualListImplProps>(
       virtualizer,
       horizontal,
       prefixClassName,
+      className,
+      style,
     } = props;
 
     const htmlProps = omitNonHTMLProps(props);
@@ -31,12 +34,16 @@ const FixedListImpl = forwardRef<HTMLDivElement, VirtualListImplProps>(
       <div
         {...htmlProps}
         ref={ref}
-        className={classNameBuilder('list-container', htmlProps.className)}
+        className={classNameBuilder('list-container', className)}
+        style={{
+          ...createDirectionBasedListContainerStyle(horizontal),
+          ...style,
+        }}
       >
         <div
           style={{
-            ...createListContainerStyle(),
-            ...createDirectionBasedListContainerStyle(
+            ...createRelativePositionStyle(),
+            ...createVirtualSizeListContentStyle(
               virtualizer.getTotalSize(),
               horizontal
             ),
@@ -53,7 +60,7 @@ const FixedListImpl = forwardRef<HTMLDivElement, VirtualListImplProps>(
                 key={getItemKey(itemRenderSource, index)}
                 data-virtual-item-index={index}
                 style={{
-                  ...createListContentStyle(),
+                  ...createAbsolutePositionStyle(),
                   ...createDirectionBasedFixedListItemStyle(
                     virtualItem,
                     horizontal

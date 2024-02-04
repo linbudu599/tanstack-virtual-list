@@ -3,10 +3,11 @@ import React, { forwardRef } from 'react';
 import { VirtualListImplProps } from '../typings';
 import { omitNonHTMLProps } from '../modules/InputNormalizer';
 import {
-  createListContentStyle,
+  createAbsolutePositionStyle,
+  createVirtualSizeListContentStyle,
   createDirectionBasedListContainerStyle,
   createDynamicListItemStyle,
-  createListContainerStyle,
+  createRelativePositionStyle,
   createVerticalDynamicListStyle,
 } from '../modules/StylePresets';
 import { usePaddingPlaceholder } from '../hooks/usePaddingPlaceholder';
@@ -51,7 +52,15 @@ const VerticalDynamicVirtualList = forwardRef<
   HTMLDivElement,
   VirtualListImplProps
 >((props, ref) => {
-  const { virtualizer, padding, prefixClassName } = props;
+  const {
+    virtualizer,
+    padding,
+    prefixClassName,
+    horizontal,
+    className,
+    style,
+  } = props;
+
   const htmlProps = omitNonHTMLProps(props);
 
   const virtualizerItems = virtualizer.getVirtualItems();
@@ -65,22 +74,26 @@ const VerticalDynamicVirtualList = forwardRef<
     <div
       {...htmlProps}
       ref={ref}
-      className={classNameBuilder('list-container', htmlProps.className)}
+      className={classNameBuilder('list-container', className)}
+      style={{
+        ...createDirectionBasedListContainerStyle(horizontal),
+        ...style,
+      }}
     >
       {PaddingStartPlaceholder}
       <div
         style={{
-          ...createListContainerStyle(),
-          ...createDirectionBasedListContainerStyle(
+          ...createRelativePositionStyle(),
+          ...createVirtualSizeListContentStyle(
             virtualizer.getTotalSize(),
-            false
+            horizontal
           ),
         }}
         className={classNameBuilder('list')}
       >
         <div
           style={{
-            ...createListContentStyle(),
+            ...createAbsolutePositionStyle(),
             ...createVerticalDynamicListStyle(
               virtualizerItems?.[0]?.start ?? 0
             ),
@@ -98,7 +111,14 @@ const HorizontalDynamicVirtualList = forwardRef<
   HTMLDivElement,
   VirtualListImplProps
 >((props, ref) => {
-  const { virtualizer, padding, prefixClassName } = props;
+  const {
+    virtualizer,
+    padding,
+    prefixClassName,
+    horizontal,
+    style,
+    className,
+  } = props;
   const htmlProps = omitNonHTMLProps(props);
   const classNameBuilder = createClassNameBuilder(prefixClassName);
 
@@ -109,13 +129,17 @@ const HorizontalDynamicVirtualList = forwardRef<
     <div
       {...htmlProps}
       ref={ref}
-      className={classNameBuilder('list-container', htmlProps.className)}
+      className={classNameBuilder('list-container', className)}
+      style={{
+        ...createDirectionBasedListContainerStyle(horizontal),
+        ...style,
+      }}
     >
       {PaddingStartPlaceholder}
       <div
         style={{
-          ...createListContainerStyle(),
-          ...createDirectionBasedListContainerStyle(
+          ...createRelativePositionStyle(),
+          ...createVirtualSizeListContentStyle(
             virtualizer.getTotalSize(),
             true
           ),

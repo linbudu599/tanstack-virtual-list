@@ -39,6 +39,9 @@ export function normalizeInputProps(
 
     prefixClassName = 'tanstack-virtual',
 
+    className = '',
+    style = {},
+
     ...restProps
   } = (input ?? {}) as VirtualListProps;
 
@@ -55,6 +58,8 @@ export function normalizeInputProps(
     initialOffset,
     useVirtualizerOptions,
     prefixClassName,
+    className,
+    style,
     ...restProps,
   };
 }
