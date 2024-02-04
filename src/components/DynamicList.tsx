@@ -21,6 +21,7 @@ const DynamicItemsRenderer: React.FC<VirtualListImplProps> = (props) => {
     getItemKey,
     virtualizer,
     prefixClassName,
+    renderItemContainer: ItemContainer,
   } = props;
 
   const classNameBuilder = createClassNameBuilder(prefixClassName);
@@ -33,7 +34,7 @@ const DynamicItemsRenderer: React.FC<VirtualListImplProps> = (props) => {
         const itemRenderSource = dataSource[index];
 
         return (
-          <div
+          <ItemContainer
             key={getItemKey(itemRenderSource, index)}
             data-virtual-item-index={index}
             ref={virtualizer.measureElement}
@@ -41,7 +42,7 @@ const DynamicItemsRenderer: React.FC<VirtualListImplProps> = (props) => {
             className={classNameBuilder('list-item')}
           >
             {renderItem(itemRenderSource, index, virtualItem)}
-          </div>
+          </ItemContainer>
         );
       })}
     </>
@@ -59,6 +60,7 @@ const VerticalDynamicVirtualList = forwardRef<
     horizontal,
     className,
     style,
+    renderListContainer: ListContainer,
   } = props;
 
   const htmlProps = omitNonHTMLProps(props);
@@ -71,7 +73,7 @@ const VerticalDynamicVirtualList = forwardRef<
     usePaddingPlaceholder(padding, false);
 
   return (
-    <div
+    <ListContainer
       {...htmlProps}
       ref={ref}
       className={classNameBuilder('list-container', className)}
@@ -103,7 +105,7 @@ const VerticalDynamicVirtualList = forwardRef<
         </div>
       </div>
       {PaddingEndPlaceholder}
-    </div>
+    </ListContainer>
   );
 });
 
@@ -118,7 +120,9 @@ const HorizontalDynamicVirtualList = forwardRef<
     horizontal,
     style,
     className,
+    renderListContainer: ListContainer,
   } = props;
+
   const htmlProps = omitNonHTMLProps(props);
   const classNameBuilder = createClassNameBuilder(prefixClassName);
 
@@ -126,7 +130,7 @@ const HorizontalDynamicVirtualList = forwardRef<
     usePaddingPlaceholder(padding, false);
 
   return (
-    <div
+    <ListContainer
       {...htmlProps}
       ref={ref}
       className={classNameBuilder('list-container', className)}
@@ -149,7 +153,7 @@ const HorizontalDynamicVirtualList = forwardRef<
         <DynamicItemsRenderer {...props} />
       </div>
       {PaddingEndPlaceholder}
-    </div>
+    </ListContainer>
   );
 });
 

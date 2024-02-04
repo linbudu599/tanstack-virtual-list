@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
 
 import type {
   Virtualizer,
@@ -61,6 +61,14 @@ export interface VirtualListPaddingProps {
   scrollPadding?: VirtualListPadding;
 }
 
+// TODO: Props Typing？
+type RenderContainer = React.ElementType;
+
+export interface VirtualListRenderContainerProps {
+  renderListContainer?: RenderContainer;
+  renderItemContainer?: RenderContainer;
+}
+
 export interface NormalizedVirtualListPaddingProps {
   padding: NormalizedVirtualListPadding;
   scrollPadding: NormalizedVirtualListPadding;
@@ -87,6 +95,7 @@ export interface VirtualListProps<TDataSource = any>
     VirtualListPaddingProps,
     VirtualListEventProps,
     VirtualListStyleMutationProps,
+    VirtualListRenderContainerProps,
     React.PropsWithChildren,
     React.HTMLAttributes<HTMLDivElement> {}
 
@@ -97,6 +106,7 @@ export interface NormalizedVirtualListProps<TDataSource = any>
     NormalizedVirtualListPaddingProps,
     VirtualListEventProps,
     Required<VirtualListStyleMutationProps>,
+    Required<VirtualListRenderContainerProps>,
     React.PropsWithChildren,
     React.HTMLAttributes<HTMLDivElement> {}
 

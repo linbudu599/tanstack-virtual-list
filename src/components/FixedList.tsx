@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
-import clsx from 'clsx';
 
 import { omitNonHTMLProps } from '../modules/InputNormalizer';
+import { createClassNameBuilder } from '../modules/ClassNameBuilder';
 import {
   createAbsolutePositionStyle,
   createVirtualSizeListContentStyle,
@@ -11,7 +11,6 @@ import {
 } from '../modules/StylePresets';
 
 import type { VirtualListImplProps } from '../typings';
-import { createClassNameBuilder } from '../modules/ClassNameBuilder';
 
 const FixedListImpl = forwardRef<HTMLDivElement, VirtualListImplProps>(
   (props, ref) => {
@@ -24,6 +23,8 @@ const FixedListImpl = forwardRef<HTMLDivElement, VirtualListImplProps>(
       prefixClassName,
       className,
       style,
+      renderListContainer: ListContainer,
+      renderItemContainer: ItemContainer,
     } = props;
 
     const htmlProps = omitNonHTMLProps(props);
@@ -31,7 +32,7 @@ const FixedListImpl = forwardRef<HTMLDivElement, VirtualListImplProps>(
     const classNameBuilder = createClassNameBuilder(prefixClassName);
 
     return (
-      <div
+      <ListContainer
         {...htmlProps}
         ref={ref}
         className={classNameBuilder('list-container', className)}
@@ -56,7 +57,7 @@ const FixedListImpl = forwardRef<HTMLDivElement, VirtualListImplProps>(
             const itemRenderSource = dataSource[index];
 
             return (
-              <div
+              <ItemContainer
                 key={getItemKey(itemRenderSource, index)}
                 data-virtual-item-index={index}
                 style={{
@@ -69,11 +70,11 @@ const FixedListImpl = forwardRef<HTMLDivElement, VirtualListImplProps>(
                 className={classNameBuilder('list-item')}
               >
                 {renderItem(itemRenderSource, index, virtualItem)}
-              </div>
+              </ItemContainer>
             );
           })}
         </div>
-      </div>
+      </ListContainer>
     );
   }
 );

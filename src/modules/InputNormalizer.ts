@@ -39,6 +39,9 @@ export function normalizeInputProps(
 
     prefixClassName = 'tanstack-virtual',
 
+    renderListContainer = 'div',
+    renderItemContainer = 'div',
+
     className = '',
     style = {},
 
@@ -60,6 +63,8 @@ export function normalizeInputProps(
     prefixClassName,
     className,
     style,
+    renderListContainer,
+    renderItemContainer,
     ...restProps,
   };
 }
