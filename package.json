@@ -18,7 +18,7 @@
   "bugs": {
     "url": "https://github.com/LinbuduLab/tanstack-virtual-list/issues"
   },
-  "homepage": "https://tanstack-react-virtual.netlify.app",
+  "homepage": "https://tanstack-virtual-list.vercel.app",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
