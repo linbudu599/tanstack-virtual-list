@@ -86,6 +86,8 @@ export function omitNonHTMLProps(
     useVirtualizerOptions,
     virtualizer,
     prefixClassName,
+    renderItemContainer,
+    renderListContainer,
     ...restProps
   } = input;
 

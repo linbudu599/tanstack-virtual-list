@@ -23,7 +23,14 @@ const Loader: React.FC<LoaderProps> = ({ onAppear, onDisappear, children }) => {
     };
   }, []);
 
+  const mounted = useRef(false);
+
   useEffect(() => {
+    if (!mounted.current) {
+      mounted.current = true;
+      return;
+    }
+
     isVisible ? onAppear?.() : onDisappear?.();
   }, [isVisible]);
 

@@ -59,6 +59,7 @@ export default function App() {
   }, [pageNo]);
 
   const handleLoaderAppear = () => {
+    console.log('Loader appears, fetching next page...');
     setPageNo((no) => no + 1);
   };
 

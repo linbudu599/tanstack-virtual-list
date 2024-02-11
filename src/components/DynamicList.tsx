@@ -78,27 +78,27 @@ const VerticalDynamicVirtualList = forwardRef<
       ref={ref}
       className={classNameBuilder('list-container', className)}
       style={{
-        ...createDirectionBasedListContainerStyle(horizontal),
-        ...style,
+        height: 400,
+        width: 400,
+        overflowY: 'auto',
       }}
     >
       {PaddingStartPlaceholder}
       <div
         style={{
-          ...createRelativePositionStyle(),
-          ...createVirtualSizeListContentStyle(
-            virtualizer.getTotalSize(),
-            horizontal
-          ),
+          height: virtualizer.getTotalSize(),
+          width: '100%',
+          position: 'relative',
         }}
         className={classNameBuilder('list')}
       >
         <div
           style={{
-            ...createAbsolutePositionStyle(),
-            ...createVerticalDynamicListStyle(
-              virtualizerItems?.[0]?.start ?? 0
-            ),
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            transform: `translateY(${virtualizerItems[0]?.start ?? 0}px)`,
           }}
         >
           <DynamicItemsRenderer {...props} />

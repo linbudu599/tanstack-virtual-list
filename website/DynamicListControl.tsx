@@ -53,6 +53,7 @@ export default function App() {
       </div>
       <VirtualList
         dynamic
+        ref={ref}
         className='List'
         getItemHeight={() => 50}
         dataSource={DataSource}
