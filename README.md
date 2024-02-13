@@ -92,31 +92,6 @@ export default function App() {
 
 ```
 
-## Custom and Preset `scrollToFn`
-
-The original `@tanstack/react-virtual` package provides `scrollToFn` to customize the scrolling behavior, including the animation curve of the scrolling, etc. `tanstack-virtual-list` has a set of built-in scrollToFn implementations that use different animation curves, which you can apply by importing them and configuring them for the `<VirtualList />` component.
-
-```tsx
-import React from 'react';
-import VirtualList, { easeInOutScrollToFn } from 'tanstack-virtual-list';
-
-const DataSource = Array.from({ length: 1000 }).map((_, i) => i);
-
-export default function App() {
-  return (
-    <>
-      <VirtualList
-        scrollToFn={easeInOutScrollToFn}
-        getItemHeight={() => 50}
-        dataSource={DataSource}
-        getItemKey={(item, index) => item}
-        renderItem={(item, index) => <></>}
-      />
-    </>
-  );
-}
-```
-
 ## Infinite Loading
 
 To simplify the use in infinite loading scenarios, `tanstack-virtual-list` package provides a `<Loader />` export, which is a simple wrapper based on `IntersectionObserver`, and you can trigger the behavior of loading the next page of data through its `onAppear` event.
@@ -134,7 +109,7 @@ export default function App() {
   const fetchNextPage = async (pageNo = 0) => {
     console.log('Fetching', pageNo);
     setFetchingNextPage(true);
-    const res = await mockRes(pageNo);
+    const res = await mockRequest(pageNo);
     console.log('√ Fetched', pageNo);
 
     setFetchingNextPage(false);

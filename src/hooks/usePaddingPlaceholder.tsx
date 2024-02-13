@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
-import { NormalizedVirtualListPadding } from '../typings';
+
+import type { NormalizedVirtualListPadding } from '../typings';
 
 export const usePaddingPlaceholder = (
   padding: NormalizedVirtualListPadding,

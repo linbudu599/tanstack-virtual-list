@@ -1,17 +1,16 @@
 import React, { forwardRef } from 'react';
 
-import { VirtualListImplProps } from '../typings';
 import { omitNonHTMLProps } from '../modules/InputNormalizer';
+import { usePaddingPlaceholder } from '../hooks/usePaddingPlaceholder';
+import { createClassNameBuilder } from '../modules/ClassNameBuilder';
 import {
-  createAbsolutePositionStyle,
   createVirtualSizeListContentStyle,
   createDirectionBasedListContainerStyle,
   createDynamicListItemStyle,
   createRelativePositionStyle,
-  createVerticalDynamicListStyle,
 } from '../modules/StylePresets';
-import { usePaddingPlaceholder } from '../hooks/usePaddingPlaceholder';
-import { createClassNameBuilder } from '../modules/ClassNameBuilder';
+
+import type { VirtualListImplProps } from '../typings';
 
 const DynamicItemsRenderer: React.FC<VirtualListImplProps> = (props) => {
   const {

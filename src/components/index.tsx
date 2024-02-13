@@ -8,6 +8,7 @@ import { normalizeInputProps } from '../modules/InputNormalizer';
 import { VirtualizerIndexAttribute } from '../modules/Constants';
 
 import type {
+  InstantiatedVirtualizerOptions,
   VirtualListComponentTyping,
   VirtualListProps,
   VirtualListRef,

@@ -62,15 +62,6 @@ export function createDirectionBasedFixedListItemStyle(
   };
 }
 
-export function createVerticalDynamicListStyle(
-  initialItemStart: number
-): React.CSSProperties {
-  return {
-    width: '100%',
-    transform: `translateY(${initialItemStart}px)`,
-  };
-}
-
 export function createDynamicListItemStyle(
   item: VirtualItem,
   horizontal = false
