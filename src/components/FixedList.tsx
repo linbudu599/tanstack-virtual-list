@@ -35,7 +35,7 @@ const FixedListImpl = forwardRef<HTMLDivElement, VirtualListImplProps>(
       <ListContainer
         {...htmlProps}
         ref={ref}
-        className={classNameBuilder('list-container', className)}
+        className={classNameBuilder('container', className)}
         style={{
           ...createDirectionBasedListContainerStyle(horizontal),
           ...style,
@@ -49,7 +49,7 @@ const FixedListImpl = forwardRef<HTMLDivElement, VirtualListImplProps>(
               horizontal
             ),
           }}
-          className={classNameBuilder('list')}
+          className={classNameBuilder('content')}
         >
           {virtualizerItems.map((virtualItem) => {
             const { index } = virtualItem;
@@ -67,7 +67,7 @@ const FixedListImpl = forwardRef<HTMLDivElement, VirtualListImplProps>(
                     horizontal
                   ),
                 }}
-                className={classNameBuilder('list-item')}
+                className={classNameBuilder('item')}
               >
                 {renderItem(itemRenderSource, index, virtualItem)}
               </ItemContainer>

@@ -37,7 +37,7 @@ export function normalizeInputProps(
 
     useVirtualizerOptions = {},
 
-    prefixClassName = 'tanstack-virtual',
+    prefixClassName = 'tanstack-virtual-list',
 
     renderListContainer = 'div',
     renderItemContainer = 'div',

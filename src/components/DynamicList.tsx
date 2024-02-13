@@ -38,7 +38,7 @@ const DynamicItemsRenderer: React.FC<VirtualListImplProps> = (props) => {
             data-virtual-item-index={index}
             ref={virtualizer.measureElement}
             style={createDynamicListItemStyle(virtualItem, horizontal)}
-            className={classNameBuilder('list-item')}
+            className={classNameBuilder('item')}
           >
             {renderItem(itemRenderSource, index, virtualItem)}
           </ItemContainer>
@@ -75,7 +75,7 @@ const VerticalDynamicVirtualList = forwardRef<
     <ListContainer
       {...htmlProps}
       ref={ref}
-      className={classNameBuilder('list-container', className)}
+      className={classNameBuilder('container', className)}
       style={{
         height: 400,
         width: 400,
@@ -89,7 +89,7 @@ const VerticalDynamicVirtualList = forwardRef<
           width: '100%',
           position: 'relative',
         }}
-        className={classNameBuilder('list')}
+        className={classNameBuilder('content')}
       >
         <div
           style={{
@@ -132,7 +132,7 @@ const HorizontalDynamicVirtualList = forwardRef<
     <ListContainer
       {...htmlProps}
       ref={ref}
-      className={classNameBuilder('list-container', className)}
+      className={classNameBuilder('container', className)}
       style={{
         ...createDirectionBasedListContainerStyle(horizontal),
         ...style,
@@ -147,7 +147,7 @@ const HorizontalDynamicVirtualList = forwardRef<
             true
           ),
         }}
-        className={classNameBuilder('list')}
+        className={classNameBuilder('content')}
       >
         <DynamicItemsRenderer {...props} />
       </div>
