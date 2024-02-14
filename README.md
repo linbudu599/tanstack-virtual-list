@@ -41,7 +41,7 @@ export default function App() {
         dataSource={DataSource}
         getItemHeight={() => 50}
         getItemKey={(item, index) => item}
-				useVirtualizerOptions={{
+        useVirtualizerOptions={{
           // ...
         }}
         renderItem={(item, index) => {
@@ -305,4 +305,3 @@ export default function App() {
   );
 }
 ```
-
