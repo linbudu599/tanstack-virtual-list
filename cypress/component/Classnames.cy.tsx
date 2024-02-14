@@ -29,7 +29,7 @@ describe('Classnames.cy.tsx', () => {
     cy.get('.my-virtual-list-item').should('exist');
   });
 
-  it('Dynamic', () => {
+  it('Dynamic Vertical', () => {
     cy.mount(
       <VirtualList
         className='List'
@@ -50,6 +50,33 @@ describe('Classnames.cy.tsx', () => {
 
     cy.get('.my-virtual-list-container').should('exist');
     cy.get('.my-virtual-list-content').should('exist');
+    cy.get('.my-virtual-list-content-transform').should('exist');
+    cy.get('.my-virtual-list-item').should('exist');
+  });
+
+  it('Dynamic Horizontal', () => {
+    cy.mount(
+      <VirtualList
+        className='List'
+        prefixClassName='my-virtual-list'
+        dynamic
+        horizontal
+        getItemHeight={() => 50}
+        dataSource={DataSource}
+        getItemKey={(item, index) => item}
+        renderItem={(item, index) => {
+          return (
+            <div className={index % 2 === 0 ? 'ListItemOdd' : 'ListItemEven'}>
+              ITEM {item}
+            </div>
+          );
+        }}
+      />
+    );
+
+    cy.get('.my-virtual-list-container').should('exist');
+    cy.get('.my-virtual-list-content').should('exist');
+    cy.get('.my-virtual-list-content-transform').should('not.exist');
     cy.get('.my-virtual-list-item').should('exist');
   });
 });
