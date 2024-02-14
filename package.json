@@ -61,7 +61,7 @@
     "vitest": "^1.2.2"
   },
   "dependencies": {
-    "@tanstack/react-virtual": "3.0.2",
+    "@tanstack/react-virtual": "3.0.4",
     "clsx": "^2.1.0"
   }
 }

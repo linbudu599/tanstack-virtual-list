@@ -31,9 +31,7 @@ export default function App() {
         </button>
         <button
           onClick={() => {
-            ref.current?.scrollToOffset(500, {
-              behavior: 'smooth',
-            });
+            ref.current?.scrollToOffset(500, {});
           }}
         >
           Scroll to 500px

@@ -172,3 +172,133 @@ In this example we place `<Loader />` in the last position of data sources(by `d
 
 ## Configurations
 
+`tanstack-virtual-list` preserves serveral properties from `useVirtualizer` param, and, to prevent unknown DOM properties error, less commonly used properties will be placed in `useVirtualizerOptions`.
+
+### `dataSource`
+
+- `T[]`
+- required
+
+The data source to render list items.
+`tanstack-virtual-list` provides first-level typescript support, as it infers type of data item from `dataSource`.
+
+### `renderItem`
+
+- `(item: T, index: number, virtualItem: VirtualItem) => React.ReactNode`
+- required
+
+Specify how to render item.
+
+### `getItemHeight`
+
+- `(item: TDataSource, index: number) => number`
+- required
+
+Specify how to calculate item height.
+
+This is also required when using `dynamic` mode as a initial rect provider.
+
+### `getItemKey`
+
+- `(item: TDataSource, index: number) => React.Key`
+
+Specify how to get item's key.
+
+If not specified, `tanstack-virtual-list` use item index as fallback.
+
+### `dynamic`
+
+- `boolean`
+- `default: false`
+
+Whether to enable dynamic mode.
+
+Dynamic mode using a complete different layout compared to fixed mode, so make sure you need to use it indeed.
+
+This is not a natively provided configuration, but used by `tanstack-virtual-list` it self.
+
+### `horizontal`
+
+- `boolean`
+- `default: false`
+
+Whether to use horizontal layout.
+
+See [virtualizer#horizontal](https://tanstack.com/virtual/v3/docs/api/virtualizer#horizontal) for details.
+
+### `overscan`
+
+- `number`
+- `default: 0`
+
+See [virtualizer#overscan](https://tanstack.com/virtual/v3/docs/api/virtualizer#overscan) for details.
+
+### `initialOffset`
+
+- `number`
+- `default: 0`
+
+See [virtualizer#initialoffset](https://tanstack.com/virtual/v3/docs/api/virtualizer#initialoffset) for details.
+
+### `prefixClassName`
+
+- `string`
+- `default: 'tanstack-virtual-list'`
+
+This attribute is used internally in the component to determine the class name of layout containers, like:
+
+- `div.tanstack-virtual-list-container`
+  - `div.tanstack-virtual-list-content`
+    - `div.tanstack-virtual-list-item`
+    - `div.tanstack-virtual-list-item`
+    - `div.tanstack-virtual-list-item`
+    - ...
+
+### `padding`
+
+- `number | [start?: number, end?: number]`
+- `default: 0`
+
+A shortcut for [virtualizer#paddingstart](https://tanstack.com/virtual/v3/docs/api/virtualizer#paddingstart) | [virtualizer#paddingend](https://tanstack.com/virtual/v3/docs/api/virtualizer#paddingend) .
+
+- `input: 10` → `output: [10, 10]`
+- `input: [10, 20]` → `output: [10, 20]`
+
+### `scrollPadding`
+
+Nearly same to [padding](#padding).
+
+See [virtualizer#scrollpaddingstart](https://tanstack.com/virtual/v3/docs/api/virtualizer#scrollpaddingstart) | [virtualizer#scrollpaddingend](https://tanstack.com/virtual/v3/docs/api/virtualizer#scrollpaddingend) for more details.
+
+## Ref
+
+`tanstack-virtual-list` provides ref expose and corresponding typing：
+
+```typescript
+import React, { useRef } from 'react';
+
+import VirtualList, { type VirtualListRef } from tanstack-virtual-list';
+
+export default function App() {
+  const ref = useRef<VirtualListRef>(null);
+
+  const scrollTo20 = () => {
+    ref.current?.scrollToIndex(20);
+  };
+
+  return (
+    <>
+      <VirtualList
+        ref={ref}
+        className='List'
+        getItemHeight={() => 50}
+        dataSource={DataSource}
+        renderItem={(item, index) => {
+          return <div></div>;
+        }}
+      />
+    </>
+  );
+}
+```
+
