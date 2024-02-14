@@ -1,3 +1,4 @@
+import type { Exact } from 'type-fest';
 import type {
   NormalizedVirtualListPadding,
   NormalizedVirtualListProps,
@@ -29,7 +30,7 @@ export function normalizeInputProps(
 
     dynamic = false,
     horizontal = false,
-    buffer = 0,
+    overscan = 0,
     padding = 0,
     scrollPadding = 0,
 
@@ -55,7 +56,7 @@ export function normalizeInputProps(
     getItemKey,
     dynamic,
     horizontal,
-    buffer,
+    overscan,
     padding: normalizeInputPadding(padding),
     scrollPadding: normalizeInputPadding(scrollPadding),
     initialOffset,
@@ -79,7 +80,7 @@ export function omitNonHTMLProps(
     getItemKey,
     dynamic,
     horizontal,
-    buffer,
+    overscan,
     padding,
     scrollPadding,
     initialOffset,
@@ -90,6 +91,11 @@ export function omitNonHTMLProps(
     renderListContainer,
     ...restProps
   } = input;
+
+  const _ExhaustiveCheck: Exact<
+    React.HTMLAttributes<HTMLDivElement>,
+    typeof restProps
+  > = restProps;
 
   return restProps;
 }

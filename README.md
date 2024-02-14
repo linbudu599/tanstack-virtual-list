@@ -15,6 +15,14 @@ yard add tanstack-virtual-list
 pnpm install tanstack-virtual-list
 ```
 
+## Notes
+
+- When using `dynamic` mode, imperative scroll control with `behavior: 'smooth'` doesnot works correctly, and you will see warning in devtool console by `@tanstack/react-virtual`:  
+
+  *The `smooth` scroll behavior is not fully supported with dynamic size.`*
+
+- When using `dynamic` mode, infinite list can not works correctly as element rect meaturement failed.
+
 ## Usage
 
 The `tanstack-virtual-list` package is as consistent as possible with the API of `@tanstack/react-virtual`, but has additional dataSource and renderItem properties for rendering list elements, plus you can provide additional properties directly to the useVirtualizer via `props. useVirtualizerOptions` to provide additional properties directly to the core method useVirtualizer.
@@ -132,7 +140,7 @@ export default function App() {
       {dataSource.length ? (
         <VirtualList
           getItemHeight={() => 50}
-          buffer={5}
+          overscan={5}
           dataSource={dataSource.concat(['_Loader_'])}
           getItemKey={(item, index) => item}
           renderItem={(item, index) => {
@@ -161,3 +169,6 @@ export default function App() {
 ```
 
 In this example we place `<Loader />` in the last position of data sources(by `dataSource.concat(['_Loader_'])`)，and render `<Loader />` in `renderItem` function. You can also place it in anywhere you like.
+
+## Configurations
+

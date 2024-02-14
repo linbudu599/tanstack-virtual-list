@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 
-import VirtualList, { VirtualListRef } from '../src';
+import VirtualList, { type VirtualListRef } from '../src';
 
 const DataSource = Array.from({ length: 1000 }).map((_, i) => ({
   id: i,
@@ -24,9 +24,7 @@ export default function App() {
       >
         <button
           onClick={() => {
-            ref.current?.scrollByOffset(50, {
-              behavior: 'smooth',
-            });
+            ref.current?.scrollByOffset(50, {});
           }}
         >
           Scroll by 50px
@@ -42,13 +40,24 @@ export default function App() {
         </button>
         <button
           onClick={() => {
-            ref.current?.scrollToIndex(50, {
-              align: 'center',
-              behavior: 'smooth',
-            });
+            ref.current?.scrollToIndex(0, {});
           }}
         >
-          Scroll #50 into view
+          Scroll to the top
+        </button>
+        <button
+          onClick={() => {
+            ref.current?.scrollToIndex(DataSource.length / 2, {});
+          }}
+        >
+          Scroll to the middle
+        </button>
+        <button
+          onClick={() => {
+            ref.current?.scrollToIndex(DataSource.length - 1, {});
+          }}
+        >
+          Scroll to the end
         </button>
       </div>
       <VirtualList

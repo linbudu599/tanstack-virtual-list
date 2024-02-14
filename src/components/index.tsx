@@ -1,5 +1,5 @@
 import React, { forwardRef, useImperativeHandle, useRef } from 'react';
-import { useVirtualizer } from '@tanstack/react-virtual';
+import { elementScroll, useVirtualizer } from '@tanstack/react-virtual';
 
 import FixedListImpl from './FixedList';
 import DynamicListImpl from './DynamicList';
@@ -24,7 +24,7 @@ const VirtualList = forwardRef<VirtualListRef, VirtualListProps>(
       dynamic,
       dataSource,
       getItemHeight,
-      buffer,
+      overscan,
       padding,
       scrollPadding,
       horizontal,
@@ -40,17 +40,26 @@ const VirtualList = forwardRef<VirtualListRef, VirtualListProps>(
       parseInt(String(item), 10)
     );
 
+    const scrollToFn: InstantiatedVirtualizerOptions['scrollToFn'] = (
+      offset,
+      options,
+      virtualizer
+    ) => {
+      elementScroll(offset, options, virtualizer);
+    };
+
     const virtualizer = useVirtualizer({
       count: dataSource.length,
       getScrollElement: () => listRef.current,
       estimateSize: (index) => getItemHeight(dataSource[index], index),
-      overscan: buffer,
+      overscan,
       horizontal,
       paddingStart,
       paddingEnd,
       scrollPaddingStart,
       scrollPaddingEnd,
       initialOffset,
+      scrollToFn,
       ...useVirtualizerOptions,
       indexAttribute: VirtualizerIndexAttribute,
     });

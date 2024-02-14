@@ -8,6 +8,7 @@ import {
   createDirectionBasedListContainerStyle,
   createDynamicListItemStyle,
   createRelativePositionStyle,
+  createVertialDynamicListContentTransformStyle,
 } from '../modules/StylePresets';
 
 import type { VirtualListImplProps } from '../typings';
@@ -77,28 +78,26 @@ const VerticalDynamicVirtualList = forwardRef<
       ref={ref}
       className={classNameBuilder('container', className)}
       style={{
-        height: 400,
-        width: 400,
-        overflowY: 'auto',
+        ...createDirectionBasedListContainerStyle(horizontal),
+        ...style,
       }}
     >
       {PaddingStartPlaceholder}
       <div
-        style={{
-          height: virtualizer.getTotalSize(),
-          width: '100%',
-          position: 'relative',
-        }}
         className={classNameBuilder('content')}
+        style={{
+          ...createRelativePositionStyle(),
+          ...createVirtualSizeListContentStyle(
+            virtualizer.getTotalSize(),
+            false
+          ),
+        }}
       >
         <div
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            transform: `translateY(${virtualizerItems[0]?.start ?? 0}px)`,
-          }}
+          className={classNameBuilder('content-transform')}
+          style={createVertialDynamicListContentTransformStyle(
+            virtualizerItems
+          )}
         >
           <DynamicItemsRenderer {...props} />
         </div>
@@ -140,6 +139,7 @@ const HorizontalDynamicVirtualList = forwardRef<
     >
       {PaddingStartPlaceholder}
       <div
+        className={classNameBuilder('content')}
         style={{
           ...createRelativePositionStyle(),
           ...createVirtualSizeListContentStyle(
@@ -147,7 +147,6 @@ const HorizontalDynamicVirtualList = forwardRef<
             true
           ),
         }}
-        className={classNameBuilder('content')}
       >
         <DynamicItemsRenderer {...props} />
       </div>

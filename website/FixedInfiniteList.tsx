@@ -78,7 +78,7 @@ export default function App() {
         <VirtualList
           className='List'
           getItemHeight={() => 50}
-          buffer={5}
+          overscan={5}
           style={{
             marginTop: '15px',
           }}

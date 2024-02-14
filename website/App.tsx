@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Card, Spacer, Tabs, Text, Grid } from '@geist-ui/core';
+import { Card, Spacer, Tabs, Text, Popover, Link } from '@geist-ui/core';
 
 import FixedVirtualList from './FixedList';
 import FixedHorizontalVirtualList from './FixedHorizontalList';
@@ -32,6 +32,13 @@ function RenderExamples(props: {
   title: string;
   config: Record<string, React.FC>;
 }) {
+  const pathnameSpecified = window.location.pathname.split('/')?.pop() ?? '';
+
+  const initialTabValue =
+    pathnameSpecified in props.config
+      ? pathnameSpecified
+      : Object.keys(props.config)[0];
+
   return (
     <>
       <Card
@@ -43,7 +50,7 @@ function RenderExamples(props: {
         <Text h4 my={0}>
           {props.title}
         </Text>
-        <Tabs initialValue={Object.keys(props.config)[0]}>
+        <Tabs initialValue={initialTabValue}>
           {Object.entries(props.config).map(([title, Component], key) => {
             const label = title
               .split('-')
@@ -52,6 +59,22 @@ function RenderExamples(props: {
 
             return (
               <Tabs.Item label={label} value={title} key={title}>
+                <Link
+                  color
+                  underline
+                  target='_blank'
+                  href={`https://github.com/linbudu599/tanstack-virtual-list/tree/main/website/${label.replace(
+                    / /g,
+                    ''
+                  )}.tsx`}
+                  placeholder={''}
+                  style={{
+                    display: 'block',
+                    margin: '0 auto',
+                  }}
+                >
+                  Check source code in GitHub
+                </Link>
                 <Component />
               </Tabs.Item>
             );
@@ -71,6 +94,7 @@ function App() {
         alignItems: 'flex-start',
         justifyContent: 'center',
         height: '600px',
+        overflow: 'auto',
       }}
     >
       {RenderExamples({ title: 'Fixed Virtual List', config: FixedExamples })}

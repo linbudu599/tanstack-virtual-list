@@ -78,7 +78,7 @@ export default function App() {
           className='List'
           dynamic
           getItemHeight={() => 50}
-          buffer={5}
+          overscan={5}
           style={{
             marginTop: '15px',
           }}

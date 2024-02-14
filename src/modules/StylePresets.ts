@@ -24,10 +24,12 @@ export function createVirtualSizeListContentStyle(
   virtualSize: number,
   horizontal = false
 ): React.CSSProperties {
-  return {
-    height: horizontal ? '100%' : virtualSize,
-    width: horizontal ? virtualSize : '100%',
-  };
+  return horizontal
+    ? { width: virtualSize, height: '100%' }
+    : {
+        width: '100%',
+        height: virtualSize,
+      };
 }
 
 export function createAbsolutePositionStyle(): React.CSSProperties {
@@ -59,6 +61,18 @@ export function createDirectionBasedFixedListItemStyle(
   return {
     transform,
     ...rect,
+  };
+}
+
+export function createVertialDynamicListContentTransformStyle(
+  items: VirtualItem[]
+): React.CSSProperties {
+  return {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    transform: `translateY(${items[0]?.start ?? 0}px)`,
   };
 }
 

@@ -61,7 +61,6 @@ export interface VirtualListPaddingProps {
   scrollPadding?: VirtualListPadding;
 }
 
-// TODO: Props Typing？
 type RenderContainer = React.ElementType;
 
 export interface VirtualListRenderContainerProps {
@@ -75,10 +74,10 @@ export interface NormalizedVirtualListPaddingProps {
 }
 
 export interface VirtualListCoreProps<TDataSource = any> {
+  dynamic?: boolean;
   initialOffset?: number;
   horizontal?: boolean;
-  dynamic?: boolean;
-  buffer?: number;
+  overscan?: number;
   useVirtualizerOptions?: Partial<InstantiatedVirtualizerOptions>;
 }
 
