@@ -5,7 +5,8 @@
 
 Ready-to-use virtual list component in React, built on top of [@tanstack/react-virtual](https://tanstack.com/virtual/v3/docs/framework/react/react-virtual), with built-in support for dynamic subitems, infinite loading, and custom scroll-to functions.
 
-You can visit live demo [here](https://tanstack-virtual-list.vercel.app/).
+- You can visit live demo [here](https://tanstack-virtual-list.vercel.app/).
+- [Configurations](#configurations)
 
 ## Installation
 
@@ -19,13 +20,13 @@ pnpm install tanstack-virtual-list
 
 - When using `dynamic` mode, imperative scroll control with `behavior: 'smooth'` doesnot works correctly, and you will see warning in devtool console by `@tanstack/react-virtual`:  
 
-  *The `smooth` scroll behavior is not fully supported with dynamic size.`*
+  > *The `smooth` scroll behavior is not fully supported with dynamic size.`*
 
 - When using `dynamic` mode, infinite list can not works correctly as element rect meaturement failed.
 
 ## Usage
 
-The `tanstack-virtual-list` package is as consistent as possible with the API of `@tanstack/react-virtual`, but has additional dataSource and renderItem properties for rendering list elements, plus you can provide additional properties directly to the useVirtualizer via `props. useVirtualizerOptions` to provide additional properties directly to the core method useVirtualizer.
+The `tanstack-virtual-list` package is as consistent as possible with the API of `@tanstack/react-virtual`, but has additional dataSource and renderItem properties for rendering list elements, plus you can provide additional properties directly to the useVirtualizer via `props.useVirtualizerOptions` to provide additional properties directly to the core method useVirtualizer.
 
 ```tsx
 import React from 'react';
@@ -40,6 +41,9 @@ export default function App() {
         dataSource={DataSource}
         getItemHeight={() => 50}
         getItemKey={(item, index) => item}
+				useVirtualizerOptions={{
+          // ...
+        }}
         renderItem={(item, index) => {
           return (
             <div className={index % 2 === 0 ? 'ListItemOdd' : 'ListItemEven'}>
@@ -177,7 +181,7 @@ In this example we place `<Loader />` in the last position of data sources(by `d
 ### `dataSource`
 
 - `T[]`
-- required
+- Required
 
 The data source to render list items.
 `tanstack-virtual-list` provides first-level typescript support, as it infers type of data item from `dataSource`.
@@ -185,14 +189,14 @@ The data source to render list items.
 ### `renderItem`
 
 - `(item: T, index: number, virtualItem: VirtualItem) => React.ReactNode`
-- required
+- Required
 
 Specify how to render item.
 
 ### `getItemHeight`
 
 - `(item: TDataSource, index: number) => number`
-- required
+- Required
 
 Specify how to calculate item height.
 
