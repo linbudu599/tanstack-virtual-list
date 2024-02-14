@@ -36,7 +36,7 @@
   "scripts": {
     "dev": "vite",
     "build:website": "vite build",
-    "build": "tsc",
+    "build": "tsc -p tsconfig.json",
     "preview": "vite preview",
     "test": "cypress open --component",
     "prepublish": "npm run build"
