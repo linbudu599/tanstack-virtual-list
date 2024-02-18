@@ -3,9 +3,9 @@
 ![NPM Version](https://img.shields.io/npm/v/tanstack-virtual-list)
 ![NPM (prod) Dependency Version](https://img.shields.io/npm/dependency-version/tanstack-virtual-list/%40tanstack%2Freact-virtual)
 
-Ready-to-use virtual list component in React, built on top of [@tanstack/react-virtual](https://tanstack.com/virtual/v3/docs/framework/react/react-virtual), with built-in support for dynamic subitems, infinite loading, and custom scroll-to functions.
+Ready-to-use virtual list component in React, built on top of [@tanstack/react-virtual](https://tanstack.com/virtual/v3/docs/framework/react/react-virtual), with built-in support for dynamic subitems and infinite loading.
 
-- You can visit live demo [here](https://tanstack-virtual-list.vercel.app/).
+- [Visit live demo here](https://tanstack-virtual-list.vercel.app/)
 - [Configurations](#configurations)
 
 ## Installation
@@ -79,6 +79,7 @@ export default function App() {
   return (
     <>
       <VirtualList
+        // Remember to enable dynamic mode!
         dynamic
         getItemHeight={() => 60}
         dataSource={DataSource}
@@ -106,7 +107,7 @@ export default function App() {
 
 ## Infinite Loading
 
-To simplify the use in infinite loading scenarios, `tanstack-virtual-list` package provides a `<Loader />` export, which is a simple wrapper based on `IntersectionObserver`, and you can trigger the behavior of loading the next page of data through its `onAppear` event.
+To simplify the use in infinite loading scenarios, `tanstack-virtual-list` provides a `<Loader />` component, which is a simple wrapper based on `IntersectionObserver`, and you can trigger the behavior of loading the next page of data through its `onAppear` event.
 
 ```tsx
 import React, { useEffect, useState } from 'react';
@@ -181,7 +182,7 @@ In this example we place `<Loader />` in the last position of data sources(by `d
 ### `dataSource`
 
 - `T[]`
-- Required
+- **Required**
 
 The data source to render list items.
 `tanstack-virtual-list` provides first-level typescript support, as it infers type of data item from `dataSource`.
@@ -189,22 +190,23 @@ The data source to render list items.
 ### `renderItem`
 
 - `(item: T, index: number, virtualItem: VirtualItem) => React.ReactNode`
-- Required
+- **Required**
 
 Specify how to render item.
 
 ### `getItemHeight`
 
 - `(item: TDataSource, index: number) => number`
-- Required
+- **Required**
 
 Specify how to calculate item height.
 
-This is also required when using `dynamic` mode as a initial rect provider.
+This is also required when using `dynamic` mode as initial rect provider.
 
 ### `getItemKey`
 
 - `(item: TDataSource, index: number) => React.Key`
+- `default: (item, index) => index`
 
 Specify how to get item's key.
 
@@ -273,6 +275,10 @@ A shortcut for [virtualizer#paddingstart](https://tanstack.com/virtual/v3/docs/a
 Nearly same to [padding](#padding).
 
 See [virtualizer#scrollpaddingstart](https://tanstack.com/virtual/v3/docs/api/virtualizer#scrollpaddingstart) | [virtualizer#scrollpaddingend](https://tanstack.com/virtual/v3/docs/api/virtualizer#scrollpaddingend) for more details.
+
+## `useVirtualizerOptions`
+
+See [Virtualizer](https://tanstack.com/virtual/v3/docs/api/virtualizer) here for more configurations on `@tanstack/react-virtual`.
 
 ## Ref
 
